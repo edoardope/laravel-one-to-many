@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Admin\Type;
 
 class ProjectController extends Controller
 {
@@ -35,10 +36,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $types = Type::all();
+
         $user = auth()->user();
 
         if ($user && $user->role == 'admin') {
-            return view('admin.projects.create');
+            return view('admin.projects.create', compact('types'));
         }
 
         return redirect()->route('403');
@@ -89,12 +92,13 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
+        $types = Type::all();
         $user = auth()->user();
 
         if ($user && $user->role == 'admin') {
 
             $project = Project::findOrFail($id);
-            return view('admin.projects.edit', compact('project'));
+            return view('admin.projects.edit', compact('project', 'types'));
 
         }
 

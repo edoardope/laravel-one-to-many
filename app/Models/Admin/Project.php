@@ -11,8 +11,14 @@ class Project extends Model
 
     protected $fillable = [
         'title',
-        'url',
         'slug',
         'cover_image',
+        'type_id',
     ];
+
+    public function type()
+    { //scrittura per type che in questo caso corrisponde al one di one to may
+
+        return $this->belongsTo(Type::class);
+    }
 }
